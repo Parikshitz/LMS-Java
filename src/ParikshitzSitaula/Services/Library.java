@@ -8,9 +8,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Librarian {
+public class Library {
 
-    public void addBook(Book book) throws SQLException {
+    public static void addBook(Book book) throws SQLException {
         String sql = "INSERT INTO books (title, author) VALUES (?, ?)";
         try (Connection conn = DbConn.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -20,7 +20,7 @@ public class Librarian {
         }
     }
 
-    public void addUser(Users user) throws SQLException {
+    public static void addUser(Users user) throws SQLException {
         String sql = "INSERT INTO Users (name, email) VALUES (?, ?)";
         try (Connection conn = DbConn.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -29,7 +29,7 @@ public class Librarian {
         }
     }
 
-    public List<Book> getAllBooks() throws SQLException {
+    public static List<Book> getAllBooks() throws SQLException {
         List<Book> books = new ArrayList<>();
         String sql = "SELECT * FROM books";
         try (Connection conn = DbConn.getConnection();
@@ -48,7 +48,7 @@ public class Librarian {
         return books;
     }
 
-    public List<Users> getAllUsers() throws SQLException {
+    public static List<Users> getAllUsers() throws SQLException {
         List<Users> users = new ArrayList<>();
         String sql = "SELECT * FROM Users";
         try (Connection conn = DbConn.getConnection();
@@ -65,7 +65,7 @@ public class Librarian {
         return users;
     }
 
-    public void issueBook(int bookId, int userId) throws SQLException {
+    public static void issueBook(int bookId, int userId) throws SQLException {
         String checkSql = "SELECT is_issued FROM books WHERE id = ?";
         String issueSql = "INSERT INTO issued_books (book_id, Users_id, issue_date) VALUES (?, ?, ?)";
         String updateSql = "UPDATE books SET is_issued = true WHERE id = ?";
@@ -100,7 +100,7 @@ public class Librarian {
         }
     }
 
-    public void returnBook(int bookId) throws SQLException {
+    public static void returnBook(int bookId) throws SQLException {
         String returnSql = "UPDATE issued_books SET return_date = ? WHERE book_id = ? AND return_date IS NULL";
         String updateSql = "UPDATE books SET is_issued = false WHERE id = ?";
 

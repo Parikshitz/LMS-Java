@@ -1,45 +1,46 @@
 package ParikshitzSitaula.Swing;
 
 import ParikshitzSitaula.entities.Users;
+import ParikshitzSitaula.Services.Library;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import ParikshitzSitaula.Services.Library;
 
 public class AddUser extends JFrame {
     public AddUser() {
         setTitle("Add User");
-        setSize(400, 250);
+        setSize(450, 300);
         setLocationRelativeTo(null);
         setLayout(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         JLabel titleLabel = new JLabel("Add New User");
         titleLabel.setFont(new Font("Arial", Font.BOLD, 18));
-        titleLabel.setBounds(140, 20, 120, 30);
+        titleLabel.setBounds(150, 20, 150, 30);
         add(titleLabel);
 
-        JLabel idLabel = new JLabel("User ID:");
-        JTextField idField = new JTextField();
         JLabel nameLabel = new JLabel("User Name:");
         JTextField nameField = new JTextField();
 
-        idLabel.setBounds(40, 70, 80, 25);
-        idField.setBounds(130, 70, 220, 30);
-        nameLabel.setBounds(40, 120, 80, 25);
-        nameField.setBounds(130, 120, 220, 30);
+        nameLabel.setBounds(40, 70, 80, 25);
+        nameField.setBounds(130, 70, 270, 30);
 
         JButton addButton = new JButton("Add User");
         JButton cancelButton = new JButton("Cancel");
 
-        addButton.setBounds(130, 170, 100, 35);
-        cancelButton.setBounds(250, 170, 100, 35);
+        addButton.setBounds(130, 140, 120, 35);
+        cancelButton.setBounds(280, 140, 120, 35);
 
         addButton.addActionListener((ActionEvent e) -> {
             try {
-                int id = Integer.parseInt(idField.getText());
-                String name = nameField.getText();
-                Users user = new Users(id, name);
+                String name = nameField.getText().trim();
+
+                if (name.isEmpty()) {
+                    JOptionPane.showMessageDialog(this, "Please enter a User Name.");
+                    return;
+                }
+
+                Users user = new Users(0, name);
                 Library.addUser(user);
                 JOptionPane.showMessageDialog(this, "User added successfully.");
                 dispose();
@@ -50,8 +51,6 @@ public class AddUser extends JFrame {
 
         cancelButton.addActionListener(e -> dispose());
 
-        add(idLabel);
-        add(idField);
         add(nameLabel);
         add(nameField);
         add(addButton);

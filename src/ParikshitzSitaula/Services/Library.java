@@ -21,7 +21,7 @@ public class Library {
     }
 
     public static void addUser(Users user) throws SQLException {
-        String sql = "INSERT INTO Users (name, email) VALUES (?, ?)";
+        String sql = "INSERT INTO Users (name) VALUES (?)";
         try (Connection conn = DbConn.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, user.getName());
